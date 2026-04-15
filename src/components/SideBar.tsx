@@ -1,3 +1,18 @@
+import { NavLink } from "react-router-dom";
+import { sideBarLinks } from "../utils/sideBarLinks";
+
+const getNavLinkClass = ({
+  isActive,
+}: {
+  isActive: boolean;
+}) => `flex items-center gap-3 p-2 rounded-md transition-colors cursor-pointer
+  ${
+    isActive
+      ? "bg-(--accent-bg) text-(--accent)"
+      : "text-(--text-secondary) hover:bg-(--bg-hover)"
+  }
+`;
+
 export function SideBar() {
   return (
     <nav className="flex flex-col gap-8 p-6">
@@ -6,12 +21,14 @@ export function SideBar() {
           Principal
         </p>
         <ul className="flex flex-col gap-2">
-          <li className="text-(--accent) bg-(--accent-bg) p-2 rounded-md">
-            ⊞ Dashboard
-          </li>
-          <li className="text-(--text-secondary) hover:bg-(--bg-hover) p-2 rounded-md cursor-pointer">
-            Escalas do Mês
-          </li>
+          {sideBarLinks.map((link) => (
+            <li key={link.to}>
+              <NavLink to={link.to} className={getNavLinkClass}>
+                <span className="text-lg">{link.icon}</span>
+                <span>{link.label}</span>
+              </NavLink>
+            </li>
+          ))}
         </ul>
       </div>
     </nav>

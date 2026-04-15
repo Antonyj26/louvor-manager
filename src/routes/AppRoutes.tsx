@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 import { AppLayout } from "../components/AppLayout";
-import { NewScale } from "../pages/newScale";
+import { NewScale } from "../pages/NewScale";
 
 export function AppRoutes() {
   return (
