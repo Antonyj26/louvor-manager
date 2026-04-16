@@ -21,7 +21,7 @@ export function NewScale() {
         </div>
         <div className="flex gap-3">
           <Button variant="secondary">Salvar Rascunho</Button>
-          <Button>
+          <Button onClick={handleSubmit}>
             <span className="text-lg">✓</span>
             Publicar Escala
           </Button>

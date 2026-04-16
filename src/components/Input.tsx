@@ -5,7 +5,7 @@ type Props = React.ComponentProps<"input"> & {
 export function Input({ legend, type = "text", ...rest }: Props) {
   {
     return (
-      <fieldset className="border-(--border-light)">
+      <fieldset>
         {legend && (
           <legend className="text-(--text-secondary) text-sm font-medium">
             {legend}

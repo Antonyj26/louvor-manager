@@ -1,4 +1,4 @@
-import { Button } from "./Button"; // Importe o seu componente de Button
+import { Button } from "./Button";
 
 export function EquipCard() {
   return (

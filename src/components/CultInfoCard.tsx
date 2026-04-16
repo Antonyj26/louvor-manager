@@ -1,6 +1,6 @@
 import { Input } from "./Input";
 import { Select } from "./Select";
-import { typeOptions } from "../utils/typeOptions"; // Ajuste o caminho se necessário
+import { typeOptions } from "../utils/typeOptions";
 
 export function CultInfoCard() {
   return (
