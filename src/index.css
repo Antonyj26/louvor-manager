@@ -23,6 +23,13 @@
   --blue: #60a5fa;
   --blue-bg: rgba(96, 165, 250, 0.12);
 
+  --background-image-radial-gradient: radial-gradient(
+    circle at top right,
+    #2d1b4d,
+    var(--bg-base)
+  );
+  --bg-base: #0d0f14;
+
   --text-primary: #f0f2ff;
   --text-secondary: #9aa3c2;
   --text-muted: #5a6380;
