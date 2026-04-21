@@ -1,9 +1,10 @@
 import { Router } from "./routes/Index";
+import { AuthProvider } from "./context/AuthContext";
 
 export function App() {
   return (
-    <div>
+    <AuthProvider>
       <Router />
-    </div>
+    </AuthProvider>
   );
 }

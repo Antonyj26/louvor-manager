@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export function Login() {
   return (
-    <div className="w-full max-w-[400px] bg-(--bg-surface) border border-(--border) p-8 md:p-10 rounded-2xl shadow-2xl">
+    <div className="w-full max-w-100 bg-(--bg-surface) border border-(--border) p-8 md:p-10 rounded-2xl shadow-2xl">
       <div className="flex flex-col items-center mb-8">
         <div className="w-14 h-14 bg-(--accent) rounded-xl flex items-center justify-center text-white text-2xl shadow-lg shadow-(--accent-glow) mb-4">
           🎵
