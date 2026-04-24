@@ -1,6 +1,7 @@
 import { Button } from "../components/Button";
 import { CultInfoCard } from "../components/CultInfoCard";
 import { EquipCard } from "../components/EquipCard";
+import { MemberModal } from "../components/MemberModal";
 
 export function NewScale() {
   const handleSubmit = (e: React.FormEvent) => {

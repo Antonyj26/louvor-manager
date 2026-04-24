@@ -1,7 +1,7 @@
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { z, ZodError } from "zod";
 import { api } from "../services/api";
 import { useAuth } from "../hooks/useAuth";
