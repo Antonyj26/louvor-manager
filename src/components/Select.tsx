@@ -29,6 +29,10 @@ export function Select({ legend, options, className = "", ...rest }: Props) {
           `}
           {...rest}
         >
+          <option value="" disabled hidden>
+            Selecione...
+          </option>
+
           {options.map((option) => (
             <option
               key={option.value}

@@ -1,27 +1,85 @@
 import { Select } from "./Select";
-import { Input } from "./Input";
 import { Button } from "./Button";
+import { useState, useEffect } from "react";
+import { api } from "../services/api";
+import { AxiosError } from "axios";
+import type { ScaleMember } from "../pages/NewScale";
 
-// Opções simuladas (depois você puxa isso da sua API do Spring Boot)
-const membrosMock = [
-  { value: "am", label: "Ana Martins" },
-  { value: "rs", label: "Rafael Silva" },
-  { value: "lc", label: "Lucas Costa" },
-];
-
-const funcoesMock = [
-  { value: "vocal", label: "Vocal" },
-  { value: "violao", label: "Violão" },
-  { value: "bateria", label: "Bateria" },
-  { value: "teclado", label: "Teclado" },
+const funcoes = [
+  { value: "VOCAL", label: "Vocal" },
+  { value: "VIOLAO", label: "Violão" },
+  { value: "GUITARRA", label: "Guitarra" },
+  { value: "BATERIA", label: "Bateria" },
+  { value: "TECLADO", label: "Teclado" },
+  { value: "BAIXO", label: "Baixo" },
+  { value: "BACKING_VOCAL", label: "Backing Vocal" },
+  { value: "MESA", label: "Mesa" },
+  { value: "DATA_SHOW", label: "Data Show" },
 ];
 
 type MemberModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  onAdd: (membro: ScaleMember) => void;
 };
 
-export function MemberModal({ isOpen, onClose }: MemberModalProps) {
+type OptionType = {
+  value: string;
+  label: string;
+};
+
+export function MemberModal({ isOpen, onClose, onAdd }: MemberModalProps) {
+  const [members, setMembers] = useState<OptionType[]>([]);
+  const [isLoadingMembers, setIsLoadingMembers] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState("");
+  const [selectedUserName, setSelectedUserName] = useState("");
+  const [selectedFunction, setSelectedFunction] = useState("");
+
+  useEffect(() => {
+    async function fetchUsers() {
+      try {
+        setIsLoadingMembers(true);
+
+        const response = await api.get("/v1/users");
+
+        const formattedMembers = response.data.map((user: any) => ({
+          value: String(user.id),
+          label: user.name,
+        }));
+
+        setMembers(formattedMembers);
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          alert(error.response?.data.message);
+        }
+      } finally {
+        setIsLoadingMembers(false);
+      }
+    }
+
+    if (isOpen) {
+      fetchUsers();
+    } else {
+      setSelectedUserId("");
+      setSelectedFunction("");
+    }
+  }, [isOpen]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!selectedUserId || !selectedFunction) {
+      alert("Por favor, selecione um membro e uma função.");
+      return;
+    }
+
+    onAdd({
+      userId: selectedUserId,
+      userName: selectedUserName,
+      function: selectedFunction,
+    });
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -53,27 +111,41 @@ export function MemberModal({ isOpen, onClose }: MemberModalProps) {
           </button>
         </header>
 
-        <form className="flex flex-col gap-5">
-          <Select legend="Membro" options={membrosMock} defaultValue="" />
+        <div className="flex flex-col gap-5">
+          <Select
+            legend={isLoadingMembers ? "Carregando membros" : "Membro"}
+            options={members}
+            value={selectedUserId}
+            disabled={isLoadingMembers}
+            onChange={(e) => {
+              const idSelecionado = e.target.value;
+              setSelectedUserId(idSelecionado);
+
+              const membroEncontrado = members.find(
+                (m) => m.value === idSelecionado,
+              );
+              if (membroEncontrado) {
+                setSelectedUserName(membroEncontrado.label);
+              }
+            }}
+          />
 
           <Select
             legend="Função / Instrumento"
-            options={funcoesMock}
-            defaultValue=""
-          />
-
-          <Input
-            legend="Observação (opcional)"
-            placeholder="Ex: Confirmar disponibilidade"
+            options={funcoes}
+            value={selectedFunction}
+            onChange={(e) => setSelectedFunction(e.target.value)}
           />
 
           <div className="flex justify-end gap-3 mt-3">
             <Button variant="secondary" type="button" onClick={onClose}>
               Cancelar
             </Button>
-            <Button type="submit">Adicionar</Button>
+            <Button type="button" onClick={handleSubmit}>
+              Adicionar
+            </Button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

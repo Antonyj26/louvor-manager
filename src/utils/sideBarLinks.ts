@@ -1,7 +1,7 @@
 export const sideBarLinks = [
   {
     to: "/",
-    label: "dashboard",
+    label: "Dashboard",
     icon: "⊞",
   },
   {
