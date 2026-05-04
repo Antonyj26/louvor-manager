@@ -63,7 +63,7 @@ export function NewScale() {
         api.post("v1/event", payload);
       }
 
-      navigate("/");
+      navigate("/scales");
     } catch (error) {
       if (error instanceof AxiosError) {
         alert(error.response?.data.message);
@@ -85,7 +85,6 @@ export function NewScale() {
           </p>
         </div>
         <div className="flex gap-3">
-          <Button variant="secondary">Salvar Rascunho</Button>
           <Button onClick={handleSubmit} isLoading={isLoading}>
             <span className="text-lg">✓</span>
             Publicar Escala

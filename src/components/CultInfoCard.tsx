@@ -9,8 +9,17 @@ type CultInfoCardProps = {
 };
 
 export function CultInfoCard({ cultData, setCultData }: CultInfoCardProps) {
+  // Função "coringa" para atualizar qualquer campo do formulário de culto
   const handleChange = (field: keyof CultData, value: string) => {
-    setCultData({ ...cultData, [field]: value });
+    setCultData({
+      // 1. O "...cultData" faz uma cópia de tudo que já estava preenchido antes (para não perder dados)
+      ...cultData,
+
+      // 2. Os colchetes [field] avisam o JavaScript: "Use o nome que está dentro dessa variável"
+      // 3. O "value" é o novo texto que o usuário acabou de digitar
+      // Resultado: Ele atualiza APENAS o campo específico que foi alterado.
+      [field]: value,
+    });
   };
 
   return (

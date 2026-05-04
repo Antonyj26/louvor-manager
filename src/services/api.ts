@@ -20,3 +20,20 @@ api.interceptors.request.use((config) => {
 
   return config;
 });
+
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response?.status === 401 || error.response?.status === 403) {
+      console.warn("Token expirado ou inválido. Forçando logout...");
+
+      localStorage.removeItem("@louvor:user");
+
+      window.location.href = "/";
+    }
+
+    return Promise.reject(error);
+  },
+);

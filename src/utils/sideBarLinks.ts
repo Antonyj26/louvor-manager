@@ -7,6 +7,11 @@ export const sideBarLinks = [
   {
     to: "/newScale",
     label: "Nova Escala",
+    icon: "+",
+  },
+  {
+    to: "/scales",
+    label: "Escalas",
     icon: "📅",
   },
   {
