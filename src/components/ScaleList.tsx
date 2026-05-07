@@ -1,8 +1,10 @@
 export type EventScale = {
   id: string;
   eventId: string;
-  userId: string;
-  userName: string;
+  user: {
+    id: string;
+    name: string;
+  };
   function: string;
 };
 
@@ -19,6 +21,7 @@ export type EventData = {
 type ScaleListProps = {
   events: EventData[];
   onDelete: (eventId: string) => void;
+  onEdit: (event: EventData) => void;
 };
 
 function formatScaleDate(dateString: string) {
@@ -59,7 +62,7 @@ function getUserColor(name: string) {
   return colors[Math.abs(hash) % colors.length];
 }
 
-export function ScaleList({ events, onDelete }: ScaleListProps) {
+export function ScaleList({ events, onDelete, onEdit }: ScaleListProps) {
   if (events.length === 0) {
     return (
       <div className="text-center py-10 text-(--text-muted)">
@@ -76,11 +79,12 @@ export function ScaleList({ events, onDelete }: ScaleListProps) {
         return (
           <article
             key={event.id}
+            onClick={() => onEdit(event)}
             className="flex items-center justify-between p-5 bg-(--bg-surface) border border-(--border) rounded-2xl shadow-sm transition-hover hover:border-(--text-muted) cursor-pointer"
           >
             {/* Lado Esquerdo: Data + Infos */}
             <div className="flex items-center gap-6">
-              <div className="flex flex-col items-center justify-center pr-6 border-r border-(--border) min-w-[70px]">
+              <div className="flex flex-col items-center justify-center pr-6 border-r border-(--border) min-w-17.5">
                 <span className="text-3xl font-black text-(--text-primary) leading-none">
                   {dia}
                 </span>
@@ -128,11 +132,11 @@ export function ScaleList({ events, onDelete }: ScaleListProps) {
               <div className="flex -space-x-2">
                 {event.scales.map((member) => (
                   <div
-                    key={member.id}
-                    className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold ring-2 ring-(--bg-surface) ${getUserColor(member.userName)}`}
-                    title={`${member.userName} - ${member.function}`}
+                    key={member.user.id}
+                    className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold ring-2 ring-(--bg-surface) ${getUserColor(member.user.name)}`}
+                    title={`${member.user.name} - ${member.function}`}
                   >
-                    {getInitials(member.userName)}
+                    {getInitials(member.user.name)}
                   </div>
                 ))}
               </div>

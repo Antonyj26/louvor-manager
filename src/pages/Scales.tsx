@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import { ScaleList, type EventData } from "../components/ScaleList";
-import { Button } from "../components/Button"; // Ajuste o caminho se necessário
+import { Button } from "../components/Button";
 import { useNavigate } from "react-router-dom";
-import { api } from "../services/api"; // Ajuste o caminho da sua config do Axios
+import { api } from "../services/api";
+import { EditMembersModal } from "../components/EditMembersModal";
+import type { EventScale } from "../components/ScaleList";
+import { AxiosError } from "axios";
 
 export function Scales() {
   const navigate = useNavigate();
   const [events, setEvents] = useState<EventData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  // Estados para controlar o Modal de Edição
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [eventToEdit, setEventToEdit] = useState<EventData | null>(null);
 
   useEffect(() => {
     async function fetchEvents() {
@@ -27,7 +33,6 @@ export function Scales() {
   }, []);
 
   const handleDelete = async (eventId: string) => {
-    // Uma janelinha de confirmação para evitar cliques acidentais
     const confirm = window.confirm(
       "Tem certeza que deseja excluir esta escala?",
     );
@@ -42,6 +47,53 @@ export function Scales() {
     } catch (error) {
       console.error("Erro ao excluir:", error);
       alert("Não foi possível excluir a escala.");
+    }
+  };
+
+  const handleOpenEdit = (event: EventData) => {
+    setEventToEdit(event);
+    setIsEditModalOpen(true);
+  };
+
+  // Função que recebe a lista nova do Modal e salva
+  const handleSaveMembers = async (
+    eventId: string,
+    updatedMembers: EventScale[],
+  ) => {
+    try {
+      const eventToUpdate = events.find((ev) => ev.id === eventId);
+
+      if (!eventToUpdate) {
+        throw new Error("Evento não encontrado");
+      }
+
+      const payload = {
+        id: eventToUpdate?.id,
+        name: eventToUpdate.name,
+        date: eventToUpdate.date,
+        time: eventToUpdate.time,
+        type: eventToUpdate.type,
+        description: eventToUpdate.description,
+        scales: updatedMembers.map((member) => ({
+          userId: member.user.id,
+          function: member.function,
+        })),
+      };
+
+      await api.put("/v1/event", payload);
+
+      setEvents(
+        events.map((ev) =>
+          ev.id === eventId ? { ...ev, scales: updatedMembers } : ev,
+        ),
+      );
+
+      alert("Escala atualizada com sucesso!");
+    } catch (error) {
+      console.error("Erro ao atualizar escala:", error);
+      if (error instanceof AxiosError) {
+        return alert(error.message ?? "Erro ao atualizar escala");
+      }
     }
   };
 
@@ -65,8 +117,18 @@ export function Scales() {
           Carregando escalas...
         </div>
       ) : (
-        <ScaleList events={events} onDelete={handleDelete} />
+        <ScaleList
+          events={events}
+          onDelete={handleDelete}
+          onEdit={handleOpenEdit}
+        />
       )}
+      <EditMembersModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        event={eventToEdit}
+        onSave={handleSaveMembers}
+      />
     </div>
   );
 }
