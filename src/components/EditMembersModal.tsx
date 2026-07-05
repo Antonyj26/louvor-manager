@@ -21,10 +21,10 @@ function getUserColor(name: string) {
   if (!name) return "bg-gray-500";
   const colors = [
     "bg-orange-500",
-    "bg-indigo-500",
+    "bg-emerald-500",
     "bg-teal-500",
-    "bg-purple-500",
-    "bg-pink-500",
+    "bg-green-500",
+    "bg-lime-500",
     "bg-blue-500",
     "bg-rose-500",
   ];
@@ -106,7 +106,7 @@ export function EditMembersModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/70 backdrop-blur-sm p-4">
       <div className="bg-(--bg-surface) border border-(--border) w-full max-w-lg rounded-2xl p-6 shadow-xl relative overflow-hidden">
         <header className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-3">
@@ -123,7 +123,7 @@ export function EditMembersModal({
           </div>
 
           <button
-            className="flex items-center gap-2 px-4 py-2 border-2 border-dashed border-(--border) text-(--text-muted) rounded-lg hover:border-indigo-500 hover:text-indigo-400 transition-colors text-sm font-medium"
+            className="flex items-center gap-2 px-4 py-2 border-2 border-dashed border-(--border) text-(--text-muted) rounded-lg hover:border-green-500 hover:text-green-400 transition-colors text-sm font-medium"
             onClick={handleOpenAdd}
           >
             <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
@@ -139,7 +139,7 @@ export function EditMembersModal({
           </p>
 
           {isAdding && (
-            <div className="bg-(--bg-base) p-4 rounded-xl border border-indigo-500/30 mb-4 animate-in fade-in slide-in-from-top-2">
+            <div className="bg-(--bg-base) p-4 rounded-xl border border-green-500/30 mb-4 animate-in fade-in slide-in-from-top-2">
               <h3 className="text-sm font-semibold text-(--text-primary) mb-3">
                 Novo Membro
               </h3>
@@ -189,7 +189,7 @@ export function EditMembersModal({
                 </button>
                 <button
                   onClick={handleConfirmAdd}
-                  className="px-3 py-1.5 bg-indigo-600/20 text-indigo-400 hover:bg-indigo-600/30 text-xs font-bold uppercase tracking-wide rounded-md transition-colors"
+                  className="px-3 py-1.5 bg-green-600/20 text-green-400 hover:bg-green-600/30 text-xs font-bold uppercase tracking-wide rounded-md transition-colors"
                 >
                   Confirmar
                 </button>
@@ -256,7 +256,7 @@ export function EditMembersModal({
           </button>
           <button
             onClick={handleSave}
-            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg"
+            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg"
           >
             Salvar Alterações
           </button>

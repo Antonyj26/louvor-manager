@@ -8,7 +8,7 @@ export function Router() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center text-white">
+      <div className="flex h-screen items-center justify-center bg-(--bg-base) text-(--text-primary)">
         Carregando...
       </div>
     );

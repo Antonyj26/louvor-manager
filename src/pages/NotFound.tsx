@@ -13,7 +13,7 @@ export function NotFound() {
         </div>
       </div>
 
-      <h1 className="text-8xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-orange-300 to-yellow-500 mb-2 tracking-wider">
+      <h1 className="text-8xl font-serif font-bold text-transparent bg-clip-text bg-linear-to-r from-pink-300 via-orange-300 to-yellow-500 mb-2 tracking-wider">
         404
       </h1>
 
@@ -30,7 +30,7 @@ export function NotFound() {
 
         <Button
           variant="secondary"
-          onClick={() => navigate("/musicas")}
+          onClick={() => navigate("/musics")}
           className="bg-transparent border border-(--border-light) hover:bg-(--bg-hover)"
         >
           Ver Repertório

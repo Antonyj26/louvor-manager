@@ -25,7 +25,7 @@ export function CultInfoCard({ cultData, setCultData }: CultInfoCardProps) {
   return (
     <article className="bg-(--bg-surface) border border-(--border) rounded-lg shadow-sm">
       <header className="flex items-center gap-2.5 p-6 pb-0 mb-6">
-        <div className="w-5 h-5 bg-white text-xs flex items-center justify-center rounded-sm">
+        <div className="w-5 h-5 bg-(--accent-bg) border border-(--border) text-xs flex items-center justify-center rounded-sm">
           📄
         </div>
         <h2 className="text-(--text-primary) font-semibold text-lg">
