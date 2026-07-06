@@ -39,6 +39,7 @@
   --radius-xl: 24px;
 
   --sidebar-w: 240px;
+  --sidebar-w-collapsed: 64px;
   --topbar-h: 64px;
   --bottom-nav-h: 68px;
 }
